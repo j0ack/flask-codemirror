@@ -1,0 +1,11 @@
+# Fichier de config pour mercurial
+# 20-SEP-13
+[web]
+contact = TROUVERIE Joachim
+description = Embed CodeMirror field in Flask WTF 
+allow_archive = gz, zip, bz2
+allow_push = * 
+push_ssl = false
+
+[hooks]
+changegroup = hg update >&2

@@ -1,0 +1,13 @@
+<html>
+<head>
+{{ codemirror.include_codemirror() }}
+</head>
+<body>
+<form method = "POST">
+  {{ form.hidden_tag() }}
+  {{ form.test }}
+  {{ form.source }}
+  {{ form.submit }}
+</form>
+</body>
+</html>
