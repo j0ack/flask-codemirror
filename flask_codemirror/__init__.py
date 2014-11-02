@@ -23,14 +23,14 @@ class CodeMirrorHeaders(object):
         CodeMirror extension for Flask
         :param : config - app config
     """
-    addons        = ('mode','overlay')
+    addons        = (('mode','overlay'),)
     languages_key = 'CODEMIRROR_LANGUAGES'
     theme_key     = 'CODEMIRROR_THEME'
     addon_key     = 'CODEMIRROR_ADDONS'
     cdn_url       = 'http://cdnjs.cloudflare.com/ajax/libs/codemirror/'
     mode_url      = cdn_url + '{0}/mode/{1}/{1}.js'
     theme_url     = cdn_url + '{0}/theme/{1}.css'
-    addon_url     = cdn_utl + '{0}/addon/{1}/{2}.js'
+    addon_url     = cdn_url + '{0}/addon/{1}/{2}.js'
     base_css_url  = cdn_url + '{0}/codemirror.css'
     base_url      = cdn_url + '{0}/codemirror.js'
 
