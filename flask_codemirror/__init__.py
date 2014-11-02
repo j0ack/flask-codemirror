@@ -9,7 +9,7 @@
     Manage a source code field using CodeMirror and WTForms
     for Flask
 """
-
+import requests
 import urllib2
 import warnings
 from jinja2 import Markup
@@ -23,11 +23,14 @@ class CodeMirrorHeaders(object):
         CodeMirror extension for Flask
         :param : config - app config
     """
+    addons        = ('mode','overlay')
     languages_key = 'CODEMIRROR_LANGUAGES'
     theme_key     = 'CODEMIRROR_THEME'
+    addon_key     = 'CODEMIRROR_ADDONS'
     cdn_url       = 'http://cdnjs.cloudflare.com/ajax/libs/codemirror/'
     mode_url      = cdn_url + '{0}/mode/{1}/{1}.js'
     theme_url     = cdn_url + '{0}/theme/{1}.css'
+    addon_url     = cdn_utl + '{0}/addon/{1}/{2}.js'
     base_css_url  = cdn_url + '{0}/codemirror.css'
     base_url      = cdn_url + '{0}/codemirror.js'
 
@@ -35,11 +38,12 @@ class CodeMirrorHeaders(object):
         self.theme = config.get(self.__class__.theme_key, None)
         # languages              
         self.languages = config.get(self.__class__.languages_key, None)
+        self.extra_addons = config.get(self.__class__.addon_key,None)
         if not self.languages :
             warnings.warn('Flask-Codemirror : {0} ' \
                           'is set to None,'.format(self.__class__.languages_key))
 
-    def include_codemirror(self, version = '3.20.0'):
+    def include_codemirror(self, version = '4.7.0'):
         """
            Include JavaScript in pages
         """
@@ -67,6 +71,16 @@ class CodeMirrorHeaders(object):
                 content.append('<link rel="stylesheet" href="{0}">'.format(url))
             except urllib2.HTTPError :
                 warnings.warn('Theme {0} not available'.format(self.theme))
+        # addons
+        if self.extra_addons:
+            self.__class__.addons += self.extra_addons
+        for addon_type,name in self.__class__.addons:
+            url = self.__class__.addon_url.format(version,addon_type,name)
+            if requests.get(url).ok:
+                content.append('<script src="{0}"></script>'.format(url))
+            else:
+                warnings.warn('addon at {0} not available'.format(url))
+
         return Markup('\n'.join(content))
 
     def html_head(self):
