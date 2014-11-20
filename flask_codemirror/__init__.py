@@ -35,14 +35,12 @@ class CodeMirrorHeaders(object):
     base_url      = cdn_url + '{0}/codemirror.js'
 
     def __init__(self, config) :
-        self.theme = config.get(self.__class__.theme_key, None)
-        # languages              
+        self.theme = config.get(self.__class__.theme_key, None)         
         self.languages = config.get(self.__class__.languages_key, None)
         self.extra_addons = config.get(self.__class__.addon_key,None)
         if not self.languages :
             warnings.warn('Flask-Codemirror : {0} ' \
                           'is set to None,'.format(self.__class__.languages_key))
-
     def include_codemirror(self, version = '4.7.0'):
         """
            Include JavaScript in pages
@@ -51,25 +49,21 @@ class CodeMirrorHeaders(object):
         url = self.__class__.base_url.format(version)
         content.append('<script src = "{0}"></script>'.format(url))
         # languages
-        if self.languages :
-            for language in self.languages :
-                try : 
-                    url  = self.__class__.mode_url.format(version, language)
-                    print type(url)
-                    print url
-                    html = urllib2.urlopen(url)
+        if self.languages:
+            for language in self.languages:
+                url  = self.__class__.mode_url.format(version, language)
+                if requests.get(url).ok:
                     content.append('<script src="{0}"></script>'.format(url))
-                except urllib2.HTTPError :
+                else:
                     warnings.warn('Language {0} unavailable'.format(language))
         # theme
         url = self.__class__.base_css_url.format(version)
         content.append('<link rel = "stylesheet" href = "{0}">'.format(url))
-        if self.theme :
-            try :
-                url  = self.__class__.theme_url.format(version, self.theme)
-                html = urllib2.urlopen(url)
+        if self.theme:
+            url  = self.__class__.theme_url.format(version, self.theme)
+            if requests.get(url).ok:
                 content.append('<link rel="stylesheet" href="{0}">'.format(url))
-            except urllib2.HTTPError :
+            else:
                 warnings.warn('Theme {0} not available'.format(self.theme))
         # addons
         if self.extra_addons:
