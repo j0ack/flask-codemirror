@@ -37,12 +37,17 @@ The module needs to be initialized in the usual way and can be configured using 
     # optional
     CODEMIRROR_THEME = '3024-day'
 
+    CODEMIRROR_ADDONS = (
+                ('ADDON_DIR','ADDON_NAME'),
+    )
+
     app = Flask(__name__)
     app.config.from_object(__name__)
     codemirror = CodeMirror(app)
 
 The config `CODEMIRROR_LANGUAGES` needs to be initialized to load JavaScript. It defined all the languages you want to edit with your fields.
 The config `CODEMIRROR_THEME` is optional and is used to style your TextArea using css from [CodeMirror website](http://codemirror.net/theme/).
+The config `CODEMIRROR_ADDONS` is optional and can enable many cool options see [Codemirror Addons](http://codemirror.net/addon/) for available addons.
 
 Finally, the template needs the support Javascript code added, by calling `codemirror.include_codemirror()` :
 
