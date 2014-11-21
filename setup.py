@@ -8,7 +8,7 @@ and Fields with WTForms
 """
 from setuptools import setup
 
-__version__ = '0.0.2'
+__version__ = '0.0.3'
 __author__ = 'TROUVERIE Joachim'
 __contact__ = 'joachim.trouverie@gmail.com'
 
