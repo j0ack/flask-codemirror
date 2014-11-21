@@ -9,8 +9,8 @@
     Manage a source code field using CodeMirror and WTForms
     for Flask
 """
+
 import requests
-import urllib2
 import warnings
 from jinja2 import Markup
 from flask import current_app
@@ -41,6 +41,8 @@ class CodeMirrorHeaders(object):
         if not self.languages :
             warnings.warn('Flask-Codemirror : {0} ' \
                           'is set to None,'.format(self.__class__.languages_key))
+
+
     def include_codemirror(self, version = '4.7.0'):
         """
            Include JavaScript in pages
@@ -77,8 +79,10 @@ class CodeMirrorHeaders(object):
 
         return Markup('\n'.join(content))
 
+
     def html_head(self):
         return self.include_codemirror()
+
 
 class CodeMirror(object):
     """
@@ -89,11 +93,13 @@ class CodeMirror(object):
         if app is not None:
             self.init_app(app)
 
+
     def init_app(self, app):
         if not hasattr(app, 'extensions'):
             app.extensions = {}
         app.extensions['codemirror'] = CodeMirrorHeaders(app.config)
         app.context_processor(self.context_processor)
+
 
     @staticmethod
     def context_processor():
