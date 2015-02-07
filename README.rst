@@ -11,16 +11,18 @@ Example
 -------
 A simple example of how to use this module
 
-     from flask.ext.wtf import form
-     from flask.ext.codemirror.fields import CodeMirrorField
-     from wtforms.fields import SubmitField
+   .. code:: python  
+   from flask.ext.wtf import form
+   from flask.ext.codemirror.fields import CodeMirrorField
+   from wtforms.fields import SubmitField
 
-     class MyForm(Form):
-         source_code = CodeMirrorField(language='python', config={'lineNumbers' : 'true'})
-         submit = SubmitField('Submit')
+   class MyForm(Form):
+       source_code = CodeMirrorField(language='python', config={'lineNumbers' : 'true'})
+       submit = SubmitField('Submit')
 
 The `CodeMirrorField` works exactly like a `TextAreaField` :
 
+    .. code:: python
     @app.route('/', methods = ['GET', 'POST'])
     def index():
         form = MyForm()
@@ -30,8 +32,8 @@ The `CodeMirrorField` works exactly like a `TextAreaField` :
 
 The module needs to be initialized in the usual way and can be configured using app.config keys
 
+    .. code:: python
     from flask.ext.codemirror import CodeMirror
-
     # mandatory
     CODEMIRROR_LANGUAGES = ['python', 'html']
     # optional
@@ -40,7 +42,6 @@ The module needs to be initialized in the usual way and can be configured using 
     CODEMIRROR_ADDONS = (
                 ('ADDON_DIR','ADDON_NAME'),
     )
-
     app = Flask(__name__)
     app.config.from_object(__name__)
     codemirror = CodeMirror(app)
@@ -51,6 +52,7 @@ The config `CODEMIRROR_ADDONS` is optional and can enable many cool options see 
 
 Finally, the template needs the support Javascript code added, by calling `codemirror.include_codemirror()` :
 
+    .. code:: html
     <html>
       <head>
         {{ codemirror.include_codemirror() }}
