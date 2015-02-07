@@ -1,30 +1,39 @@
 #! /usr/bin/env python
 #-*- coding : utf-8 -*-
-# vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:
 
 """
-   Field for Flask Codemirror
+    Flask Codemirror Field
+    ~~~~~~~~~~~~~~~~~~~~~~
+
+    Import it using
+
+          `from flask.ext.codemirror.fields import CodeMirrorField`
+
+    It works exactly like a `wtforms.fields.TextAreaField`
 """
 
 from .widgets import CodeMirrorWidget
 try :
     from wtforms.fields import TextAreaField
-except ImportError, exc :
-    print 'WTForms is required by Flask-Codemirror'
+except ImportError as exc :
+    print('WTForms is required by Flask-Codemirror')
     raise exc
 
-class CodeMirrorField(TextAreaField):
-    """
-        Code Mirror Field
 
-        Override TextArea Widget
+__author__ = 'TROUVERIE Joachim'
+
+
+class CodeMirrorField(TextAreaField):
+    """Code Mirror Field
+
+    A TextAreaField with a custom widget 
         
-        :param : language : str - CodeMirror mode
-        :param : config : dict - CodeMirror config
+    :param language: CodeMirror mode
+    :param config: CodeMirror config
     """
-    def __init__(self, label='', validators=None, language=None, 
-                 config=None, **kwargs) :        
+    def __init__(self, label='', validators = None, language = None, 
+                 config = None, **kwargs) :
+        widget = CodeMirrorWidget(language, config)
         super(CodeMirrorField, self).__init__(label=label, 
-                                              validators=validators,
-                                              widget = CodeMirrorWidget(language, config),
-                                              **kwargs)
+                                                validators = validators,
+                                                widget = widget, **kwargs)

@@ -1,0 +1,9 @@
+2015-02-07  TROUVERIE Joachim  <joachim.trouverei@joacodepel.tk>
+	* V 0.0.3
+	* Python3 support
+	* Include Addon's CSS
+	* HTTPS Flask routes
+	* CODEMIRROR_VERSION as a config value
+2014-11-21  TROUVERIE Joachim  <joachim.trouverie@joacodepel.tk>
+	* V 0.0.2
+	* CodeMirror addons
