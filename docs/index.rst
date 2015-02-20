@@ -1,8 +1,8 @@
 Welcome to Flask-CodeMirror's documentation 
 ===========================================
 
-Implementation of source code editor for Flask and Flask-WTF 
-using CodeMirror Javascript library 
+Implementation of source code editor for **Flask** and **Flask-WTF** 
+using **CodeMirror** Javascript library 
 
 Installation 
 ------------
