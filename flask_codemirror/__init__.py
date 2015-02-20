@@ -28,6 +28,7 @@ class CodeMirrorConfigException(Exception):
 
 class CodeMirrorHeaders(object):
     """CodeMirror extension for Flask
+    
     :param config: Flask app config
     """
 
@@ -57,6 +58,7 @@ class CodeMirrorHeaders(object):
     
     def _get_tag(self, url, tag, print_warn = True):
         """Check if url is available and returns given tag type
+        
         :param url: url to content relative to base url
         :param anchor: anchor type to return
         :param print_warn: if True print warn when url is unavailable
@@ -117,6 +119,7 @@ class CodeMirrorHeaders(object):
 
 class CodeMirror(object):
     """CodeMirror Flask extension
+    
     :param app: Flask instance
     """
     def __init__(self, app = None):
@@ -126,6 +129,7 @@ class CodeMirror(object):
 
     def init_app(self, app):
         """Register CodeMirror as a Flask extension
+    
         :param app: Flask instance
         """
         if not hasattr(app, 'extensions'):
