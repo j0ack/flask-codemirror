@@ -6,7 +6,9 @@ using **CodeMirror** Javascript library
 
 Installation 
 ------------
+
 ::
+   
     $ pip install flask-codemirror 
 
 Basic Example 
@@ -22,7 +24,7 @@ A simple example of how to use this module::
                                     config={'lineNumbers' : 'true'})
         submit = SubmitField('Submit') 
 
-The ``CodeMirrorField`` works exactly like a ``TextAreaField`` ::
+The ``CodeMirrorField`` works exactly like a ``TextAreaField``::
   
     @app.route('/', methods = ['GET', 'POST'])
     def index():
