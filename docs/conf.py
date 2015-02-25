@@ -107,7 +107,8 @@ html_theme = 'flask_small'
 # further.  For a list of options available for each theme, see the
 # documentation.
 html_theme_options = {
-    'github_fork' : 'j0ack/flask-codemirror'
+    'github_fork' : 'j0ack/flask-codemirror',
+    'index_logo' : 'logo.png'
 }
 
 # Add any paths that contain custom themes here, relative to this directory.

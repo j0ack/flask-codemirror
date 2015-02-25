@@ -7,7 +7,7 @@ using **CodeMirror** Javascript library
 Installation 
 ------------
 
-::
+.. code-block:: bash
    
     $ pip install flask-codemirror 
 
@@ -19,6 +19,8 @@ A simple example of how to use this module::
     from flask.ext.wtf import Form
     from flask.ext.codemirror.fields import CodeMirrorField
     from wtforms.fields import SubmitField
+
+
     class MyForm(Form):
         source_code = CodeMirrorField(language='python',
                                     config={'lineNumbers' : 'true'})
@@ -57,7 +59,9 @@ using css from `CodeMirror website`_.
 
 The config ``CODEMIRROR_ADDONS`` is optional and can enable many cool options see `Codemirror Addons`_ for available addons. 
 
-Finally, the template needs the support Javascript code added, by calling ``codemirror.include_codemirror()`` ::
+Finally, the template needs the support Javascript code added, by calling ``codemirror.include_codemirror()``
+
+.. code-block:: html
   
     <html>
       <head>
