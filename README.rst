@@ -5,7 +5,7 @@ Implementation of source code editor for Flask and Flask-WTF using CodeMirror Ja
 
 Installation
 ------------
-::
+
      $ pip install flask-codemirror
 
 Example
