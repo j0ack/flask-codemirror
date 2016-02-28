@@ -2,15 +2,15 @@
 flask-codemirror
 ----------------
 
-Add a source code field for Flask using Javascript library CodeMirror 
+Add a source code field for Flask using Javascript library CodeMirror
 and Fields with WTForms
 
 """
 from setuptools import setup
 
-__version__ = '0.0.4'
+__version__ = '1.0'
 __author__ = 'TROUVERIE Joachim'
-__contact__ = 'joachim.trouverie@joacodepel.tk'
+__contact__ = 'joachim.trouverie@linoame.fr'
 
 setup(
     name='flask-codemirror',
