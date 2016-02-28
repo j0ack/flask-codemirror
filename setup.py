@@ -30,7 +30,7 @@ setup(
         'WTForms',
         'requests'
     ],
-    test_require=['Flask-WTF'],
+    tests_require=['Flask-WTF'],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
