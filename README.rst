@@ -14,7 +14,7 @@ A simple example of how to use this module
 
     .. code:: python
 	      
-      from flask.ext.wtf import form
+      from flask.ext.wtf import Form
       from flask.ext.codemirror.fields import CodeMirrorField
       from wtforms.fields import SubmitField
       
@@ -36,10 +36,13 @@ The `CodeMirrorField` works exactly like a `TextAreaField`
 The module needs to be initialized in the usual way and can be configured using app.config keys
 
     .. code:: python
-	      
+	   
+      from flask import Flask 
       from flask.ext.codemirror import CodeMirror
       # mandatory
       CODEMIRROR_LANGUAGES = ['python', 'html']
+      WTF_CSRF_ENABLED = True
+      SECRET_KEY = 'secret'
       # optional
       CODEMIRROR_THEME = '3024-day'
       CODEMIRROR_ADDONS = (
