@@ -50,7 +50,7 @@ class CodeMirrorHeaders(object):
     THEME_KEY = 'CODEMIRROR_THEME'
     ADDONS_KEY = 'CODEMIRROR_ADDONS'
     VERSION_KEY = 'CODEMIRROR_VERSION'
-    CDN_URL = '//cdnjs.cloudflare.com/ajax/libs/codemirror/{0}/'
+    CDN_URL = 'cdnjs.cloudflare.com/ajax/libs/codemirror/{0}/'
     LANGUAGE_REL_URL = 'mode/{0}/{0}.js'
     THEME_REL_URL = 'theme/{0}.css'
     ADDON_REL_URL = 'addon/{0}/{1}.js'
@@ -77,7 +77,7 @@ class CodeMirrorHeaders(object):
         # construct complete url
         complete_url = urljoin(self.base_url, url)
         # check if exists
-        if requests.get('http:' + complete_url).ok:
+        if requests.get('http://' + complete_url).ok:
             # construct tag
             if tag == 'script':
                 return '<script src="{0}"></script>'.format(complete_url)
