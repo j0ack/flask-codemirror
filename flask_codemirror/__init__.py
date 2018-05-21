@@ -50,7 +50,7 @@ class CodeMirrorHeaders(object):
     THEME_KEY = 'CODEMIRROR_THEME'
     ADDONS_KEY = 'CODEMIRROR_ADDONS'
     VERSION_KEY = 'CODEMIRROR_VERSION'
-    CDN_URL = '//cdnjs.cloudflare.com/ajax/libs/codemirror/{0}/'
+    CDN_URL = 'https://cdnjs.cloudflare.com/ajax/libs/codemirror/{0}/'
     LANGUAGE_REL_URL = 'mode/{0}/{0}.js'
     THEME_REL_URL = 'theme/{0}.css'
     ADDON_REL_URL = 'addon/{0}/{1}.js'
