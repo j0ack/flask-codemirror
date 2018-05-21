@@ -77,7 +77,7 @@ class CodeMirrorHeaders(object):
         # construct complete url
         complete_url = urljoin(self.base_url, url)
         # check if exists
-        if requests.get('http:' + complete_url).ok:
+        if requests.get('http://' + complete_url).ok:
             # construct tag
             if tag == 'script':
                 return '<script src="{0}"></script>'.format(complete_url)
