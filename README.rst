@@ -1,6 +1,8 @@
 Flask-CodeMirror
 ================
 
+|version| |license|
+
 Implementation of source code editor for Flask and Flask-WTF using CodeMirror Javascript library
 
 Installation
@@ -13,32 +15,32 @@ Example
 A simple example of how to use this module
 
     .. code:: python
-	      
-      from flask.ext.wtf import Form
-      from flask.ext.codemirror.fields import CodeMirrorField
+
+      from flask_wtf import FlaskForm
+      from flask_codemirror.fields import CodeMirrorField
       from wtforms.fields import SubmitField
-      
-      class MyForm(Form):
-          source_code = CodeMirrorField(language='python', config={'lineNumbers' : 'true'})
+
+      class MyForm(FlaskForm):
+          source_code = CodeMirrorField(language='python', config={'lineNumbers': 'true'})
           submit = SubmitField('Submit')
 
 The `CodeMirrorField` works exactly like a `TextAreaField`
 
     .. code:: python
-	      
+
       @app.route('/', methods = ['GET', 'POST'])
       def index():
           form = MyForm()
           if form.validate_on_submit():
               text = form.source_code.data
-          return render_template('index.html', form = form)
+          return render_template('index.html', form=form)
 
 The module needs to be initialized in the usual way and can be configured using app.config keys
 
     .. code:: python
-	   
-      from flask import Flask 
-      from flask.ext.codemirror import CodeMirror
+
+      from flask import Flask
+      from flask_codemirror import CodeMirror
       # mandatory
       CODEMIRROR_LANGUAGES = ['python', 'html']
       WTF_CSRF_ENABLED = True
@@ -46,7 +48,7 @@ The module needs to be initialized in the usual way and can be configured using 
       # optional
       CODEMIRROR_THEME = '3024-day'
       CODEMIRROR_ADDONS = (
-                  ('ADDON_DIR','ADDON_NAME'),
+              ('ADDON_DIR','ADDON_NAME'),
       )
       app = Flask(__name__)
       app.config.from_object(__name__)
@@ -75,3 +77,5 @@ Finally, the template needs the support Javascript code added, by calling `codem
 
 The Javascript classes are imported from a CDN, there are no static files that need to be served by the application.
 
+.. |version| image:: https://img.shields.io/pypi/v/flask-codemirror.svg
+.. |license| image:: https://img.shields.io/github/license/j0ack/flask-codemirror.svg
