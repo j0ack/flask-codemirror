@@ -31,44 +31,53 @@ from flask_codemirror.fields import CodeMirrorField
 
 __author__ = 'TROUVERIE Joachim'
 
-# create app
-app = Flask(__name__)
+def make_app(more_config=None):
+    # create app
+    app = Flask(__name__)
 
-# config
-CODEMIRROR_LANGUAGES = ['python']
-CODEMIRROR_THEME = '3024-day'
-CODEMIRROR_ADDONS = (('dialog', 'dialog'), ('mode', 'overlay'))
-CODEMIRROR_VERSION = '4.12.0'
-SECRET_KEY = 'secret!'
-app.config.from_object(__name__)
+    # config
+    app.config.update({
+        'TESTING': True,
+        'CODEMIRROR_LANGUAGES': ['python'],
+        'CODEMIRROR_THEME': '3024-day',
+        'CODEMIRROR_ADDONS': (('dialog', 'dialog'), ('mode', 'overlay')),
+        'CODEMIRROR_VERSION': '4.12.0',
+        'SECRET_KEY': 'secret!',
+    })
+    if more_config:
+        app.config.update(more_config)
 
-# codemirror
-codemirror = CodeMirror(app)
-
-
-class MyForm(Form):
-    code = CodeMirrorField(language='python', id='test',
-                           config={'linenumbers': True})
-
-
-@app.route('/')
-def index():
-    return render_template_string('{{ codemirror.include_codemirror() }}')
+    # codemirror
+    codemirror = CodeMirror(app)
 
 
-@app.route('/form/')
-def form():
-    test_form = MyForm()
-    return render_template_string('{{ form.code }}', form=test_form)
+    class MyForm(Form):
+        code = CodeMirrorField(language='python', id='test',
+                            config={'linenumbers': True})
 
 
-class FlaskCodeMirrorTest(unittest.TestCase):
-    def setUp(self):
-        app.config['TESTING'] = True
-        self.app = app.test_client()
+    @app.route('/')
+    def index():
+        return render_template_string('{{ codemirror.include_codemirror() }}')
 
+
+    @app.route('/form/')
+    def form():
+        test_form = MyForm()
+        return render_template_string('{{ form.code }}', form=test_form)
+
+    return app
+
+
+class FlaskCodeMirrorTestBase(unittest.TestCase):
+    def setUp(self, more_config=None):
+        self.app = make_app(more_config)
+        self.app_client = self.app.test_client()
+
+
+class FlaskCodeMirrorTestHead(FlaskCodeMirrorTestBase):
     def test_head(self):
-        response = self.app.get('/')
+        response = self.app_client.get('/')
         self.assertIn(
             '<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/4.12.0/codemirror.js"></script>',
             response.data
@@ -106,8 +115,9 @@ class FlaskCodeMirrorTest(unittest.TestCase):
             response.data
         )
 
+class FlaskCodeMirrorTestForm(FlaskCodeMirrorTestBase):
     def test_form(self):
-        response = self.app.get('/form/')
+        response = self.app_client.get('/form/')
         self.assertIn(
             '<textarea id="flask-codemirror-test" name="code">',
             response.data
@@ -125,10 +135,51 @@ class FlaskCodeMirrorTest(unittest.TestCase):
             response.data
         )
 
+class FlaskCodeMirrorTestExc(unittest.TestCase):
     def test_exception(self):
-        app.config['CODEMIRROR_LANGUAGES'] = None
         with self.assertRaises(CodeMirrorConfigException):
-            CodeMirror(app)
+            app = make_app({'CODEMIRROR_LANGUAGES': None})
+
+
+class FlaskCodeMirrorTestLocal(FlaskCodeMirrorTestBase):
+    def setUp(self):
+        super(FlaskCodeMirrorTestLocal, self).setUp({'CODEMIRROR_SERVE_LOCAL': True})
+
+    def test_head(self):
+        response = self.app_client.get('/')
+        self.assertIn(
+            '<script src="/static/codemirror/4.12.0/codemirror.js"></script>',
+            response.data
+        )
+        self.assertIn(
+            '<link rel="stylesheet" href="/static/codemirror/4.12.0/codemirror.css">',
+            response.data
+        )
+        self.assertIn(
+            '<script src="/static/codemirror/4.12.0/mode/python/python.js"></script>',
+            response.data
+        )
+        self.assertIn(
+            '<link rel="stylesheet" href="/static/codemirror/4.12.0/theme/3024-day.css">',
+            response.data
+        )
+        self.assertIn(
+            '<link rel="stylesheet" href="/static/codemirror/4.12.0/theme/3024-day.css">',
+            response.data
+        )
+        self.assertIn(
+            '<link rel="stylesheet" href="/static/codemirror/4.12.0/addon/dialog/dialog.css">',
+            response.data
+        )
+        self.assertIn(
+            '<script src="/static/codemirror/4.12.0/addon/dialog/dialog.js"></script>',
+            response.data
+        )
+        self.assertIn(
+            '<script src="/static/codemirror/4.12.0/addon/mode/overlay.js"></script>',
+            response.data
+        )
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -23,10 +23,11 @@
     for Flask
 """
 
+import os
 import requests
 import warnings
 from jinja2 import Markup
-from flask import current_app
+from flask import current_app, url_for
 try:
     from urllib.parse import urljoin
 except ImportError:
@@ -50,7 +51,9 @@ class CodeMirrorHeaders(object):
     THEME_KEY = 'CODEMIRROR_THEME'
     ADDONS_KEY = 'CODEMIRROR_ADDONS'
     VERSION_KEY = 'CODEMIRROR_VERSION'
+    SERVE_LOCAL_KEY = 'CODEMIRROR_SERVE_LOCAL'
     CDN_URL = '//cdnjs.cloudflare.com/ajax/libs/codemirror/{0}/'
+    LOCAL_PATH = '/codemirror/{0}'
     LANGUAGE_REL_URL = 'mode/{0}/{0}.js'
     THEME_REL_URL = 'theme/{0}.css'
     ADDON_REL_URL = 'addon/{0}/{1}.js'
@@ -62,8 +65,12 @@ class CodeMirrorHeaders(object):
         self.languages = config.get(self.__class__.LANGUAGES_KEY, [])
         self.addons = config.get(self.__class__.ADDONS_KEY, None)
         self.version = config.get(self.__class__.VERSION_KEY, '4.12.0')
+        self.serve_local = config.get(self.__class__.SERVE_LOCAL_KEY, False)
         # construct base url
-        self.base_url = self.__class__.CDN_URL.format(self.version)
+        if self.serve_local:
+            self.base_url = None
+        else:
+            self.base_url = self.__class__.CDN_URL.format(self.version)
         if not self.languages:
             error = '{0} is required'.format(self.__class__.LANGUAGES_KEY)
             raise CodeMirrorConfigException(error)
@@ -75,19 +82,27 @@ class CodeMirrorHeaders(object):
         :param print_warn: if True print warn when url is unavailable
         """
         # construct complete url
-        complete_url = urljoin(self.base_url, url)
-        # check if exists
-        if requests.get('http:' + complete_url).ok:
-            # construct tag
-            if tag == 'script':
-                return '<script src="{0}"></script>'.format(complete_url)
-            elif tag == 'stylesheet':
-                return '<link rel="stylesheet" href="{0}">'.format(complete_url)
-            else:
-                warnings.warn('Given tag is not valid')
-        elif print_warn:
-            warnings.warn('Url {0} not valid'.format(complete_url))
-        return None
+        if self.serve_local:
+            complete_url = url_for(
+                'static',
+                filename=os.path.join(self.__class__.LOCAL_PATH.format(self.version), url).lstrip('/')
+            )
+        else:
+            complete_url = urljoin(self.base_url, url)
+            # check if exists
+            if not requests.get('http:' + complete_url).ok:
+                if print_warn:
+                    warnings.warn('Url {0} not valid'.format(complete_url))
+                return None
+
+        # construct tag
+        if tag == 'script':
+            return '<script src="{0}"></script>'.format(complete_url)
+        elif tag == 'stylesheet':
+            return '<link rel="stylesheet" href="{0}">'.format(complete_url)
+        else:
+            warnings.warn('Given tag is not valid')
+            return None
 
     def include_codemirror(self):
         """Include resources in pages"""
