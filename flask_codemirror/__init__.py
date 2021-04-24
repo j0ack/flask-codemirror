@@ -61,7 +61,7 @@ class CodeMirrorHeaders(object):
         self.theme = config.get(self.__class__.THEME_KEY, None)
         self.languages = config.get(self.__class__.LANGUAGES_KEY, [])
         self.addons = config.get(self.__class__.ADDONS_KEY, None)
-        self.version = config.get(self.__class__.VERSION_KEY, '4.12.0')
+        self.version = config.get(self.__class__.VERSION_KEY, '5.61.0')
         # construct base url
         self.base_url = self.__class__.CDN_URL.format(self.version)
         if not self.languages:

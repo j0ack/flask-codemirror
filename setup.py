@@ -8,7 +8,7 @@ and Fields with WTForms
 """
 from setuptools import setup
 
-__version__ = '1.1'
+__version__ = '1.2'
 __author__ = 'TROUVERIE Joachim'
 __contact__ = 'joachim.trouverie@linoame.fr'
 
@@ -38,7 +38,6 @@ setup(
         'Intended Audience :: Developers',
         'Operating System :: OS Independent',
         'Framework :: Flask',
-        'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 3',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
         'Topic :: Software Development :: Libraries :: Python Modules',

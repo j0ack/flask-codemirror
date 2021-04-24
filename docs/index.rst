@@ -69,6 +69,7 @@ Finally, the template needs the support Javascript code added, by calling ``code
       </head>
       <body>
         <form method="POST">
+          {{ form.csrf_token }}
           {{ form.source_code }}
         </form>
       </body>

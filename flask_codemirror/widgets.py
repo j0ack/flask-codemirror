@@ -24,9 +24,9 @@
 from __future__ import print_function
 
 import json
-from flask import current_app
+from flask import current_app, Markup
 try:
-    from wtforms.widgets import HTMLString, TextArea
+    from wtforms.widgets import TextArea
 except ImportError as exc:
     print('WTForms is required by Flask-Codemirror')
     raise exc
@@ -65,7 +65,7 @@ class CodeMirrorWidget(TextArea):
                                                       **kwargs)
         content = self._generate_content()
         post_html = self.__class__.POST_HTML.format(field.id, content)
-        return HTMLString(html + post_html)
+        return html + Markup(post_html)
 
     def _generate_content(self):
         """Dumps content using JSON to send to CodeMirror"""

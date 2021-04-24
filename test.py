@@ -24,7 +24,7 @@
 import unittest
 
 from flask import Flask, render_template_string
-from flask.ext.wtf import Form
+from flask_wtf import FlaskForm
 from flask_codemirror import CodeMirror, CodeMirrorConfigException
 from flask_codemirror.fields import CodeMirrorField
 
@@ -38,7 +38,7 @@ app = Flask(__name__)
 CODEMIRROR_LANGUAGES = ['python']
 CODEMIRROR_THEME = '3024-day'
 CODEMIRROR_ADDONS = (('dialog', 'dialog'), ('mode', 'overlay'))
-CODEMIRROR_VERSION = '4.12.0'
+CODEMIRROR_VERSION = '5.61.0'
 SECRET_KEY = 'secret!'
 app.config.from_object(__name__)
 
@@ -46,7 +46,7 @@ app.config.from_object(__name__)
 codemirror = CodeMirror(app)
 
 
-class MyForm(Form):
+class MyForm(FlaskForm):
     code = CodeMirrorField(language='python', id='test',
                            config={'linenumbers': True})
 
@@ -70,58 +70,58 @@ class FlaskCodeMirrorTest(unittest.TestCase):
     def test_head(self):
         response = self.app.get('/')
         self.assertIn(
-            '<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/4.12.0/codemirror.js"></script>',
+            b'<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.61.0/codemirror.js"></script>',
             response.data
         )
         self.assertIn(
-            '<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/4.12.0/codemirror.css">',
+            b'<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.61.0/codemirror.css">',
             response.data
         )
         self.assertIn(
-            '<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/4.12.0/mode/python/python.js"></script>',
+            b'<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.61.0/mode/python/python.js"></script>',
             response.data
         )
         self.assertIn(
-            '<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/4.12.0/theme/3024-day.css">',
+            b'<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.61.0/theme/3024-day.css">',
             response.data
         )
         self.assertIn(
-            '<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/4.12.0/theme/3024-day.css">',
+            b'<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.61.0/theme/3024-day.css">',
             response.data
         )
         self.assertIn(
-            '<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/4.12.0/addon/dialog/dialog.css">',
+            b'<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.61.0/addon/dialog/dialog.css">',
             response.data
         )
         self.assertIn(
-            '<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/4.12.0/addon/dialog/dialog.js"></script>',
+            b'<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.61.0/addon/dialog/dialog.js"></script>',
             response.data
         )
         self.assertNotIn(
-            '<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/4.12.0/addon/mode/overlay.css">',
+            b'<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.61.0/addon/mode/overlay.css">',
             response.data
         )
         self.assertIn(
-            '<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/4.12.0/addon/mode/overlay.js"></script>',
+            b'<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.61.0/addon/mode/overlay.js"></script>',
             response.data
         )
 
     def test_form(self):
         response = self.app.get('/form/')
         self.assertIn(
-            '<textarea id="flask-codemirror-test" name="code">',
+            b'<textarea id="flask-codemirror-test" name="code">',
             response.data
         )
         self.assertIn(
-            'var editor_for_test = CodeMirror.fromTextArea(',
+            b'var editor_for_test = CodeMirror.fromTextArea(',
             response.data
         )
         self.assertIn(
-            'document.getElementById(\'flask-codemirror-test\')',
+            b'document.getElementById(\'flask-codemirror-test\')',
             response.data
         )
         self.assertIn(
-            '"linenumbers": true',
+            b'"linenumbers": true',
             response.data
         )
 
