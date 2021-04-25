@@ -42,7 +42,7 @@ The module needs to be initialized in the usual way and can be configured using 
       from flask import Flask
       from flask_codemirror import CodeMirror
       # mandatory
-      CODEMIRROR_LANGUAGES = ['python', 'html']
+      CODEMIRROR_LANGUAGES = ['python', 'yaml', 'htmlembedded']
       WTF_CSRF_ENABLED = True
       SECRET_KEY = 'secret'
       # optional
@@ -68,6 +68,7 @@ Finally, the template needs the support Javascript code added, by calling `codem
          </head>
          <body>
 	   <form method="POST">
+        {{ form.csrf_token }}
               {{ form.source_code }}
 	      <input type="submit" value="OK">
            </form>
