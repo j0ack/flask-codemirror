@@ -25,7 +25,7 @@
 
 import requests
 import warnings
-from jinja2 import Markup
+from jinja2.utils import markupsafe
 from flask import current_app
 try:
     from urllib.parse import urljoin
@@ -124,7 +124,7 @@ class CodeMirrorHeaders(object):
                 if css:
                     contents.append(css)
         # return html
-        return Markup('\n'.join(contents))
+        return markupsafe.Markup('\n'.join(contents))
 
 
 class CodeMirror(object):
