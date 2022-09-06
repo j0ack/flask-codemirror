@@ -29,17 +29,17 @@ from flask_codemirror import CodeMirror, CodeMirrorConfigException
 from flask_codemirror.fields import CodeMirrorField
 
 
-__author__ = 'TROUVERIE Joachim'
+__author__ = "TROUVERIE Joachim"
 
 # create app
 app = Flask(__name__)
 
 # config
-CODEMIRROR_LANGUAGES = ['python']
-CODEMIRROR_THEME = '3024-day'
-CODEMIRROR_ADDONS = (('dialog', 'dialog'), ('mode', 'overlay'))
-CODEMIRROR_VERSION = '5.61.0'
-SECRET_KEY = 'secret!'
+CODEMIRROR_LANGUAGES = ["python"]
+CODEMIRROR_THEME = "3024-day"
+CODEMIRROR_ADDONS = (("dialog", "dialog"), ("mode", "overlay"))
+CODEMIRROR_VERSION = "5.61.0"
+SECRET_KEY = "secret!"
 app.config.from_object(__name__)
 
 # codemirror
@@ -47,88 +47,80 @@ codemirror = CodeMirror(app)
 
 
 class MyForm(FlaskForm):
-    code = CodeMirrorField(language='python', id='test',
-                           config={'linenumbers': True})
+    code = CodeMirrorField(language="python", id="test", config={"linenumbers": True})
 
 
-@app.route('/')
+@app.route("/")
 def index():
-    return render_template_string('{{ codemirror.include_codemirror() }}')
+    return render_template_string("{{ codemirror.include_codemirror() }}")
 
 
-@app.route('/form/')
+@app.route("/form/")
 def form():
     test_form = MyForm()
-    return render_template_string('{{ form.code }}', form=test_form)
+    return render_template_string("{{ form.code }}", form=test_form)
 
 
 class FlaskCodeMirrorTest(unittest.TestCase):
     def setUp(self):
-        app.config['TESTING'] = True
+        app.config["TESTING"] = True
         self.app = app.test_client()
 
     def test_head(self):
-        response = self.app.get('/')
+        response = self.app.get("/")
         self.assertIn(
             b'<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.61.0/codemirror.js"></script>',
-            response.data
+            response.data,
         )
         self.assertIn(
             b'<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.61.0/codemirror.css">',
-            response.data
+            response.data,
         )
         self.assertIn(
             b'<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.61.0/mode/python/python.js"></script>',
-            response.data
+            response.data,
         )
         self.assertIn(
             b'<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.61.0/theme/3024-day.css">',
-            response.data
+            response.data,
         )
         self.assertIn(
             b'<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.61.0/theme/3024-day.css">',
-            response.data
+            response.data,
         )
         self.assertIn(
             b'<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.61.0/addon/dialog/dialog.css">',
-            response.data
+            response.data,
         )
         self.assertIn(
             b'<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.61.0/addon/dialog/dialog.js"></script>',
-            response.data
+            response.data,
         )
         self.assertNotIn(
             b'<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.61.0/addon/mode/overlay.css">',
-            response.data
+            response.data,
         )
         self.assertIn(
             b'<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.61.0/addon/mode/overlay.js"></script>',
-            response.data
+            response.data,
         )
 
     def test_form(self):
-        response = self.app.get('/form/')
+        response = self.app.get("/form/")
         self.assertIn(
-            b'<textarea id="flask-codemirror-test" name="code">',
-            response.data
+            b'<textarea id="flask-codemirror-test" name="code">', response.data
         )
+        self.assertIn(b"var editor_for_test = CodeMirror.fromTextArea(", response.data)
         self.assertIn(
-            b'var editor_for_test = CodeMirror.fromTextArea(',
-            response.data
+            b"document.getElementById('flask-codemirror-test')", response.data
         )
-        self.assertIn(
-            b'document.getElementById(\'flask-codemirror-test\')',
-            response.data
-        )
-        self.assertIn(
-            b'"linenumbers": true',
-            response.data
-        )
+        self.assertIn(b'"linenumbers": true', response.data)
 
     def test_exception(self):
-        app.config['CODEMIRROR_LANGUAGES'] = None
+        app.config["CODEMIRROR_LANGUAGES"] = None
         with self.assertRaises(CodeMirrorConfigException):
             CodeMirror(app)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

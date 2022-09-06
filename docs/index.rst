@@ -2,7 +2,7 @@ Welcome to Flask-CodeMirror's documentation
 ===========================================
 
 Implementation of source code editor for **Flask** and **Flask-WTF**
-using **CodeMirror** Javascript library
+using **CodeMirror** JavaScript library
 
 Installation
 ------------
@@ -59,7 +59,7 @@ using css from `CodeMirror website`_.
 
 The config ``CODEMIRROR_ADDONS`` is optional and can enable many cool options see `Codemirror Addons`_ for available addons.
 
-Finally, the template needs the support Javascript code added, by calling ``codemirror.include_codemirror()``
+Finally, the template needs the support JavaScript code added, by calling ``codemirror.include_codemirror()``
 
 .. code-block:: html
 
@@ -75,7 +75,7 @@ Finally, the template needs the support Javascript code added, by calling ``code
       </body>
     </html>
 
-The Javascript classes are imported from a CDN, there are no static files that need to be served by the application.
+The JavaScript classes are imported from a CDN, there are no static files that need to be served by the application.
 
 API
 ---

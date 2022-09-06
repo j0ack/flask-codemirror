@@ -58,7 +58,7 @@ The config `CODEMIRROR_LANGUAGES` needs to be initialized to load JavaScript. It
 The config `CODEMIRROR_THEME` is optional and is used to style your TextArea using css from `CodeMirror website <http://codemirror.net/theme/>`_.
 The config `CODEMIRROR_ADDONS` is optional and can enable many cool options see `Codemirror Addons <http://codemirror.net/addon/>`_ for available addons.
 
-Finally, the template needs the support Javascript code added, by calling `codemirror.include_codemirror()` :
+Finally, the template needs the support JavaScript code added, by calling `codemirror.include_codemirror()` :
 
     .. code:: django
 
