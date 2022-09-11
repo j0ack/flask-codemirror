@@ -28,26 +28,25 @@
 from __future__ import print_function
 
 from flask_codemirror.widgets import CodeMirrorWidget
+
 try:
     from wtforms.fields import TextAreaField
 except ImportError as exc:
-    print('WTForms is required by Flask-Codemirror')
+    print("WTForms is required by Flask-Codemirror")
     raise exc
 
 
-__author__ = 'TROUVERIE Joachim'
-
-
 class CodeMirrorField(TextAreaField):
-    """Code Mirror Field
+    """Code Mirror Field.
+
     A TextAreaField with a custom widget
+
     :param language: CodeMirror mode
     :param config: CodeMirror config
     """
-    def __init__(self, label='', validators=None, language=None,
-                 config=None, **kwargs):
+
+    def __init__(self, label="", validators=None, language=None, config=None, **kwargs):
         widget = CodeMirrorWidget(language, config)
-        super(CodeMirrorField, self).__init__(label=label,
-                                              validators=validators,
-                                              widget=widget,
-                                              **kwargs)
+        super(CodeMirrorField, self).__init__(
+            label=label, validators=validators, widget=widget, **kwargs
+        )
