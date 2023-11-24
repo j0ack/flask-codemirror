@@ -25,7 +25,8 @@
 
 import requests
 import warnings
-from flask import current_app, Markup
+from flask import current_app
+from markupsafe import Markup
 
 try:
     from urllib.parse import urljoin
