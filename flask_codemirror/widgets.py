@@ -24,7 +24,8 @@
 from __future__ import print_function
 
 import json
-from flask import current_app, Markup
+from flask import current_app
+from markupsafe import Markup
 
 try:
     from wtforms.widgets import TextArea
